@@ -37,9 +37,11 @@ public class Main {
         for (int v1 = 0; v1 < visited.length; v1++) {
             if(visited[v1]){
                 List<Edge> adjEdges = adjList.get(v1);
-                for(Edge e: adjEdges){
-                    if(visited[e.v2] && (e.weight < minEdge.weight)){
-                        minEdge = e;
+                if(adjEdges != null) {
+                    for (Edge e : adjEdges) {
+                        if (!visited[e.v2] && (e.weight < minEdge.weight)) {
+                            minEdge = e;
+                        }
                     }
                 }
             }
@@ -61,13 +63,16 @@ public class Main {
         MyGraph MST = deepCopyMyGraph(g);
         visited[startingVertex] = true;
 
-        int v = startingVertex;
-        while (visited[v]){
+        while (true){
             Edge minEdge = getMinFrontierEdge(g,visited);
+            if(minEdge.weight == Integer.MAX_VALUE) {
+                break;// If there are no valid edges, exit the loop
+            }
             visited[minEdge.v1] = true;
             visited[minEdge.v2] = true;
+
             MST.addEdge(minEdge.v1, minEdge.v2, minEdge.weight);
-            v++;
+
         }
 
         return MST;
