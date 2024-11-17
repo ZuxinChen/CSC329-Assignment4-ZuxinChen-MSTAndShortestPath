@@ -75,4 +75,25 @@ public class MyGraph {
     public Map<Integer, List<Edge>> getAdjList() {
         return adjList;
     }
+
+    public void printVertices(){
+
+        System.out.print("V = { ");
+        vertices.forEach(v->System.out.print(v+" "));
+        System.out.print("}");
+        System.out.println();
+    }
+
+    public void printAdjList(){
+        System.out.println("Adj List");
+        for(Map.Entry<Integer, List<Edge>> AdjList : adjList.entrySet()){
+            System.out.print(AdjList.getKey()+": ");
+            for (Edge edge: AdjList.getValue()){
+                System.out.printf("(%d, %d, %d)",edge.v1,edge.v2,edge.weight);
+            }
+            System.out.println();
+        }
+
+    }
+
 }
