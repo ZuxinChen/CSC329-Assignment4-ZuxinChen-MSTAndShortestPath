@@ -195,12 +195,12 @@ public class Main {
      */
     public static int getMinDistVertex(MyGraph g, List<Integer> unvisitedList, int[] dist){
         int minNeighborVertex = unvisitedList.get(0);
-        int minNeighborDist = dist[0];
+        int minNeighborDist = dist[minNeighborVertex];
 
-        for (int v = 1; v < dist.length; v++) {
+        for (int v:unvisitedList) {
             if(dist[v] <minNeighborDist){
                 minNeighborDist = dist[v];
-                minNeighborVertex = unvisitedList.get(v);
+                minNeighborVertex = v;
             }
         }
         return minNeighborVertex;
@@ -243,7 +243,7 @@ public class Main {
             }
             List<Edge> adjEdges = adjList.get(currV);
             if(adjEdges != null) {
-                // all unvisited neighbors of currV
+                // all neighbors of currV
                 for (Edge edge : adjEdges) { // all edge of currV
                     int n = edge.v2; // neighbors of currV
                     if(!visited[n]) { // unvisited neighbors of currV
@@ -253,6 +253,7 @@ public class Main {
                             previous[n] = currV;
                         }
                     }
+
                 }
             }
 
