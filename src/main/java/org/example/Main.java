@@ -218,47 +218,46 @@ public class Main {
         int[] previous = new int[g.getVertices().size()];
         boolean[] visited = new boolean[g.getVertices().size()];
 
-        //Set all vertex distances to the max value
-        //Set all previous to -1
-        //Set all visited to false
-        //Put all vertices in unvisitedList
+        //initializate all
         for (int i = 0; i < g.getVertices().size(); i++) {
             dist[i] = Integer.MAX_VALUE;
             previous[i] = -1;
             visited[i] = false;
             unvisitedList.add(g.getVertices().get(i));
         }
-        //Pick a starting vertex and set its distance to 0
         dist[startingVertex] = 0;
 
         while (!unvisitedList.isEmpty()){
             int currV = getMinDistVertex(g,unvisitedList,dist);
             unvisitedList.remove((Integer) currV);
             visited[currV] = true;
-
-            Map<Integer, List<Edge>> adjList = g.getAdjList();
-            if(adjList == null) {
-                System.out.println("adjList is null, no edge in graph");
-                break;
-            }
-            List<Edge> adjEdges = adjList.get(currV);
-            if(adjEdges != null) {
-                // all neighbors of currV
-                for (Edge edge : adjEdges) { // all edge of currV
-                    int n = edge.v2; // neighbors of currV
-                    if(!visited[n]) { // unvisited neighbors of currV
-                        int possibleDist = dist[currV] + edge.weight;
-                        if (possibleDist < dist[n]) {
-                            dist[n] = possibleDist;
-                            previous[n] = currV;
-                        }
-                    }
-
-                }
-            }
-
+            updateDistances(g, currV, dist, previous, visited);
         }
         printShortestPath(g,startingVertex,dist,previous);
+    }
+
+    //Updates the distance of the current vertex's adjacent vertices and previous array.
+    private static void updateDistances(MyGraph g, int currV, int[] dist, int[] previous, boolean[] visited) {
+        Map<Integer, List<Edge>> adjList = g.getAdjList();
+        if (adjList == null) {
+            System.out.println("adjList is null, no edge in graph");
+            return;
+        }
+        List<Edge> adjEdges = adjList.get(currV);
+        if (adjEdges == null) {
+            System.out.println("not adjacent edge, "+currV+" is isolated");
+            return;
+        }
+
+        for (Edge edge : adjEdges) {
+            int n = edge.v2;
+            int possibleDist = dist[currV] + edge.weight;
+            if (!visited[n] && possibleDist < dist[n]) {
+                dist[n] = possibleDist;
+                previous[n] = currV;
+            }
+        }
+
     }
 
     // Prints the graph information about the shortest path data.

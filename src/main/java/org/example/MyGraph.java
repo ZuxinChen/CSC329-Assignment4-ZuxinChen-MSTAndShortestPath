@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/*
  * Create the MyGraph class.
  * It should use an adjacency list implementation (same class as done in the lab).
  * MyGraph Specifications
@@ -76,14 +76,19 @@ public class MyGraph {
         return adjList;
     }
 
+    //prints all vertices in the graph.
     public void printVertices(){
 
-        System.out.print("V = { ");
-        vertices.forEach(v->System.out.print(v+" "));
-        System.out.print("}");
-        System.out.println();
+        StringBuilder vertexString = new StringBuilder("V = { ");
+        for (Integer v : vertices) {
+            vertexString.append(v).append(" ");
+        }
+        vertexString.append("}");
+
+        System.out.println(vertexString);
     }
 
+    //prints all adjacnt edges in the graph.
     public void printAdjList(){
         System.out.println("Adj List");
         for(Map.Entry<Integer, List<Edge>> AdjList : adjList.entrySet()){
@@ -93,7 +98,6 @@ public class MyGraph {
             }
             System.out.println();
         }
-
     }
 
 }

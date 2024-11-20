@@ -1,6 +1,6 @@
 package org.example;
 
-/**
+/*
  * Create the Edge class with the following members:
  * • Member variables for v1, v2, and weight.
  *  They should all have the data type int.
